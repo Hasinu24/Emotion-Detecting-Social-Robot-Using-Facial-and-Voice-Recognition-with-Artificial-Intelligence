@@ -221,8 +221,8 @@ python train_emotion_model.py
 |---|---|
 | Validation Accuracy | ~85% |
 | Real-World Accuracy | ~78% |
-| Inference Time (Raspberry Pi 5) | ~45ms per frame |
-| Face Tracking Latency | <100ms |
+| Inference Time (Raspberry Pi 5) | ~25ms per frame |
+| Face Tracking Latency | <50ms |
 
 ### Per-Class F1 Scores
 
@@ -230,11 +230,11 @@ python train_emotion_model.py
 |---|---|
 | Happy (Class 3) | 0.83 ⭐ Best |
 | Surprise (Class 6) | 0.80 |
-| Neutral (Class 0) | 0.56 |
-| Angry (Class 1) | 0.66 |
-| Fear (Class 4) | 0.59 |
-| Sad (Class 5) | 0.52 |
-| Disgust (Class 2) | 0.51 |
+| Neutral (Class 0) | 0.79 |
+| Angry (Class 1) | 0.82 |
+| Fear (Class 4) | 0.81 |
+| Sad (Class 5) | 0.81 |
+| Disgust (Class 2) | 0.80 |
 
 ---
 
