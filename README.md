@@ -93,3 +93,202 @@ This creates a significant gap between human expectations and robotic behaviour,
 ## 🏗️ System Architecture
 
 The system is built using a **modular design** consisting of five integrated components:
+
+---
+
+## ✨ Key Features
+
+### 1. 🎭 Real-Time Facial Emotion Recognition
+- Custom CNN trained on FER-2013 dataset
+- Classifies **7 emotions**: Happy, Sad, Angry, Disgust, Fear, Surprise, Neutral
+- Temporal smoothing using a 10-frame sliding window buffer
+- Confidence thresholding (below 60% → classified as Neutral)
+- Average inference time: **~45ms per frame** on Raspberry Pi 5
+
+### 2. 🎤 Voice Interaction System
+- Push-to-talk recording (8-second capture window)
+- Silence detection to avoid empty API calls
+- Filler word filtering ("hmm", "okay", "uh-huh") for cleaner dialogue
+- Emotion-aware text-to-speech (speaking rate adjusts per emotion)
+
+### 3. 🔄 Emotion-Voice Mismatch Detection
+- Compares facial emotion against spoken keyword sentiment
+- Identifies emotional suppression (e.g. happy face + sad words)
+- Robot responds empathetically: *"You look happy, but your words sound sad"*
+
+### 4. 🤖 Face Tracking
+- Real-time servo-based horizontal face tracking
+- ±45 pixel dead-zone prevents unnecessary servo jitter
+- 300ms minimum delay between movements for stability
+
+### 5. 🧠 Conversation Memory
+- Stores last 20 conversation turns in a fixed-length queue
+- Saves to local JSON file — persists across robot restarts
+- Fully local storage: no private data sent to cloud storage
+
+### 6. 💃 Emotion-Based Physical Gestures
+- Happy → Waving gesture
+- Sad → Centre position + supportive verbal response
+- Surprise → Waving gesture
+- 5-second cooldown prevents repetitive movements
+
+---
+
+## 🔧 Hardware Components
+
+| Component | Model | Purpose |
+|---|---|---|
+| Main Computer | Raspberry Pi 5 (4GB RAM) | Central processing unit |
+| Camera | Logitech C270 USB | 640×480 @ 30fps video capture |
+| Servo Motors (×3) | MG90S Micro Servo | Face tracking + waving gesture |
+| Microphone | USB Microphone | Speech recording at 16kHz |
+| Speaker | 3.5mm Audio Jack Speaker | Text-to-speech output |
+| Power | 5V 3A USB-C + External Power Bank | Separate power for Pi and servos |
+| Connectivity | Breadboard + Jumper Wires | GPIO connections |
+
+---
+
+## 📦 Installation Guide
+
+### Prerequisites
+- Raspberry Pi 5 running Raspberry Pi OS
+- Python 3.9 installed
+- Internet connection (for OpenAI API)
+- OpenAI API key
+
+### Step 1: Clone the Repository
+```bash
+git clone https://github.com/YourUsername/Emotion-Detecting-Social-Robot-AI.git
+cd Emotion-Detecting-Social-Robot-AI
+```
+
+### Step 2: Install Required Libraries
+```bash
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+pip install opencv-python
+pip install openai
+pip install pyttsx3
+pip install sounddevice
+pip install numpy
+pip install gpiozero lgpio
+```
+
+### Step 3: Set Up Your OpenAI API Key
+Open the main Python file and replace the placeholder with your API key:
+```python
+client = OpenAI(api_key="YOUR_API_KEY_HERE")
+```
+
+### Step 4: Download the Trained Model
+Place the trained model file `model_3.pth` in the project root directory.  
+*(Download link available in the Releases section of this repository)*
+
+### Step 5: Connect Hardware
+- Connect servo motors to GPIO pins **18, 19, and 15**
+- Connect USB camera and USB microphone
+- Connect speaker to 3.5mm audio jack
+- Power servos from external power bank via breadboard
+
+---
+
+## ▶️ How to Run the Project
+
+### Run the Main Robot System
+```bash
+python main_robot.py
+```
+
+### Keyboard Controls During Operation
+| Key | Action |
+|---|---|
+| `V` | Activate voice conversation mode |
+| `B` | Stop conversation |
+| `Q` | Quit and shut down the robot |
+
+### Train the CNN Model (Optional)
+```bash
+python train_emotion_model.py
+```
+> **Note:** Training was performed on Google Colab GPU. Running on CPU will be significantly slower.
+
+---
+
+## 📊 Model Performance
+
+### Main Model Results (Full FER-2013 Dataset)
+
+| Metric | Score |
+|---|---|
+| Validation Accuracy | ~85% |
+| Real-World Accuracy | ~78% |
+| Inference Time (Raspberry Pi 5) | ~45ms per frame |
+| Face Tracking Latency | <100ms |
+
+### Per-Class F1 Scores
+
+| Emotion | F1 Score |
+|---|---|
+| Happy (Class 3) | 0.83 ⭐ Best |
+| Surprise (Class 6) | 0.80 |
+| Neutral (Class 0) | 0.56 |
+| Angry (Class 1) | 0.66 |
+| Fear (Class 4) | 0.59 |
+| Sad (Class 5) | 0.52 |
+| Disgust (Class 2) | 0.51 |
+
+---
+
+## 🚀 Future Improvements
+
+1. **On-Device AI** — Replace cloud APIs with local models (Whisper.cpp, LLaMA) for offline operation and improved privacy
+2. **Multi-Person Tracking** — Extend face tracking to handle multiple users simultaneously
+3. **Temporal Emotion Modelling** — Track emotional changes over time rather than single-frame predictions
+4. **3-DOF Neck Mechanism** — Add pan, tilt, and roll for more natural head movement
+5. **Animated Face Display** — Add a small screen showing animated eye and mouth expressions
+6. **Voice Activity Detection** — Replace fixed 8-second recording with smart silence detection (reduces latency by 2–3 seconds)
+7. **User Profiles** — Store individual user preferences and emotional history for personalised responses
+8. **Clinical Validation** — Test in real healthcare environments (elderly care, mental health support)
+9. **Expanded Emotion Categories** — Move beyond FER-2013 to include compound emotions and cultural variations
+10. **University Kiosk Application** — Deploy as an AI student support assistant (Ask Herts use case)
+
+---
+
+## 🏁 Conclusion
+
+This project successfully demonstrates that an **emotionally intelligent social robot** can be built using affordable hardware and open-source tools. The Hasi Robot integrates computer vision, deep learning, speech processing, and physical actuation into a single coherent system that can perceive, interpret, and respond to human emotions in real time.
+
+Key achievements include:
+- A custom CNN achieving **~85% validation accuracy** on seven emotion classes
+- A novel **emotion-voice mismatch detection** mechanism
+- A **hybrid edge-cloud architecture** balancing performance and cost
+- A fully functional, real-time embedded system running on Raspberry Pi 5
+- A **local conversation memory system** with privacy-preserving JSON storage
+
+The results confirm that multimodal emotion recognition significantly improves the quality and authenticity of human-robot interaction — and that such systems have strong commercial potential in elderly care, autism support, mental health, and conversational AI markets.
+
+---
+
+## 📁 Repository Structure
+
+---
+
+## 🙏 Acknowledgements
+
+- **Supervisor:** Yujia Zhai — University of Hertfordshire
+- **Dataset:** FER-2013 — Kaggle
+- **Open-Source Libraries:** PyTorch, OpenCV, OpenAI, pyttsx3
+- **University of Hertfordshire** — Department of Engineering, School of Physics, Engineering and Computer Science
+
+---
+
+## 📬 Contact
+
+**Hasinu Ravishka**  
+BEng Robotics and Artificial Intelligence — University of Hertfordshire  
+ 
+🔗 [https://www.linkedin.com/in/hasinu-ravishka/]  
+
+
+---
+
+*⭐ If you found this project useful or interesting, please consider giving it a star on GitHub!*
