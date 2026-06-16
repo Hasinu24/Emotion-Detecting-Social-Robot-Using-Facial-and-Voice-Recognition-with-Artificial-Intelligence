@@ -55,7 +55,7 @@ def wave_hand():
     wave_servo.value = 0
 
 # ───────────── OPENAI ─────────────
-client = OpenAI(api_key="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")
+client = OpenAI(api_key="sk-proj-ATgBQJtllKToNPJNVN9y6-yEeDbbaU2LT8IJeO30JU2Xsog8Fc-tAZ25A-LZATmRQKCjgl2i-Dat7HcA")
 
 # ───────────── TTS ─────────────
 tts_queue = queue.Queue()
