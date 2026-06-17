@@ -1,7 +1,7 @@
 # 🤖 Emotion-Detecting Social Robot Using Facial and Voice Recognition with Artificial Intelligence
 
 > **BEng Robotics and Artificial Intelligence | University of Hertfordshire**  
-> **Student:** Hasinu Ravishka | **Supervisor:** Yujia Zhai | **Date:** March 2026  
+> **Student:** Hasinu Ravishka | **Supervisor:** Yujia Zhai | **Date:** May 2026  
 > **Final Result: Distinction** 🏆
 
 ---
