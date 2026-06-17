@@ -270,7 +270,29 @@ The results confirm that multimodal emotion recognition significantly improves t
 
 ## 📁 Repository Structure
 
----
+```
+Emotion-Detecting-Social-Robot-AI/
+│
+├── main_robot.py                  # Main robot control loop
+├── train_emotion_model.py         # CNN training script
+├── emotion_detector.py            # CNN model architecture
+├── voice_interaction.py           # Whisper + GPT voice module
+├── servo_control.py               # Servo motor control functions
+├── mismatch_detection.py          # Emotion-voice mismatch logic
+├── conversation_memory.json       # Saved conversation history
+├── model_3.pth                    # Trained CNN model weights
+├── requirements.txt               # Python dependencies
+├── README.md                      # This file
+│
+├── training/
+│   ├── dataset_preparation.py
+│   ├── model_evaluation.py
+│   └── plots/                     # Training graphs and confusion matrices
+│
+└── docs/
+    ├── FYP_Report.pdf             # Full project report
+    └── circuit_diagram.png        # Hardware wiring diagram
+```
 
 ## 🙏 Acknowledgements
 
